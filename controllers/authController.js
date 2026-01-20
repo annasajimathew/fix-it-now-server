@@ -80,6 +80,7 @@ exports.register = async (req, res) => {
 
 
 // ================= LOGIN =================
+// ================= LOGIN =================
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -88,7 +89,8 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: "Email & password required" });
     }
 
-    const user = await User.findOne({ email });
+    // ✅ IMPORTANT FIX HERE
+    const user = await User.findOne({ email }).select("+password");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -108,9 +110,12 @@ exports.login = async (req, res) => {
       { expiresIn: "1d" }
     );
 
+    // ❌ hide password before sending
+    user.password = undefined;
+
     res.json({ token, user });
   } catch (error) {
-    console.error(error);
+    console.error("LOGIN ERROR:", error);
     res.status(500).json({ message: "Login failed" });
   }
 };

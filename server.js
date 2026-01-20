@@ -5,6 +5,7 @@ const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const userRoutes = require("./routes/userRoutes");
 const workerRoutes = require("./routes/workerRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const chatRoutes = require("./routes/chatRoutes");
@@ -14,6 +15,8 @@ const app = express();
 // middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // static folder for images
 app.use("/uploads", express.static("uploads"));
@@ -21,6 +24,7 @@ app.use("/uploads", express.static("uploads"));
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/workers", workerRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/chat", chatRoutes);

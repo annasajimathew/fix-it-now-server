@@ -15,7 +15,17 @@ const chatSchema = new mongoose.Schema(
     message: {
       type: String,
       required: true
-    }
+    },
+    isRead: {
+      type: Boolean,
+      default: false
+    },
+    deletedBy: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    ]
   },
   { timestamps: true }
 );

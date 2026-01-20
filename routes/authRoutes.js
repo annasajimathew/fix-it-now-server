@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { register, login } = require("../controllers/authController");
+const bcrypt = require("bcryptjs");
+const User = require("../models/userModel");
 
 // ✅ multer setup
 const multer = require("multer");
@@ -32,5 +34,7 @@ router.post(
 
 // LOGIN
 router.post("/login", login);
+
+
 
 module.exports = router;
